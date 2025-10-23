@@ -1,6 +1,10 @@
 <?php
 
+use App\Http\Controllers\CustomerController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +20,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/', [HomeController::class, 'index'])->name('home.index');
+
+
+// login customer
+Route::get('/customer/login', [CustomerController::class, 'login'])->name('customer.login');
+// ... các route khác

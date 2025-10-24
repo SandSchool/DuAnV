@@ -1,7 +1,4 @@
 @extends('layouts.default')
-
-@section('title', 'Đăng nhập khách hàng - ShoesVN')
-
 @section('main')
 <div class="container my-5" style="max-width: 500px;">
     <div class="card shadow-sm">
@@ -19,9 +16,9 @@
                     <label for="email" class="form-label">{{ __('Địa chỉ E-Mail') }}</label>
                     <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
                     @error('email')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
                     @enderror
                 </div>
 
@@ -30,9 +27,9 @@
                     <label for="password" class="form-label">{{ __('Mật khẩu') }}</label>
                     <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
                     @error('password')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
                     @enderror
                 </div>
 

@@ -17,13 +17,14 @@ use App\Http\Controllers\HomeController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
 
 
 // login customer
 Route::get('/customer/login', [CustomerController::class, 'login'])->name('customer.login');
+Route::get('/customer/register', [CustomerController::class, 'register'])->name('customer.register');
 // ... các route khác

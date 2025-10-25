@@ -1,10 +1,11 @@
-@extends('layouts.default')
-@section('main')
+@extends('layout.default')
+@section('content') 
+
 <div class="container my-5" style="max-width: 500px;">
     <div class="card shadow-sm">
         <div class="card-header bg-white text-center py-3">
             <h4 class="mb-0">{{ __('Đăng Nhập Tài Khoản') }}</h4>
-            <p class="text-muted mb-0">Chào mừng bạn quay trở lại!</p>
+            <p class="text-muted mb-0">Chào mừng bạn!</p>
         </div>
 
         <div class="card-body p-4">

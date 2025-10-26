@@ -22,7 +22,7 @@
                 </div>
                 <div class="col-md-6 text-end">
                     <a href="{{ route('customer.login') }}" class="text-white text-decoration-none me-3"><i class="fas fa-user"></i> Đăng nhập</a>
-                    <a href="#" class="text-white text-decoration-none"><i class="fas fa-user-plus"></i> Đăng ký</a>
+                    <a href="{{ route('customer.register') }}" class="text-white text-decoration-none"><i class="fas fa-user-plus"></i> Đăng ký</a>
                 </div>
             </div>
         </div>
@@ -30,7 +30,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top">
         <div class="container">
-            <a class="navbar-brand" href="/">
+            <a class="navbar-brand" href="{{ route('home.index') }}">
                 <i class="fas fa-shoe-prints"></i> ShoesVN
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -39,13 +39,13 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="X">Trang chủ</a>
+                        <a class="nav-link" href="{{ route('home.index') }}">Trang chủ</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/products">Sản phẩm</a>
+                        <a class="nav-link" href="{{ route('home.products') }}">Sản phẩm</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/about">Giới thiệu</a>
+                        <a class="nav-link" href="{{ route('home.about') }}">Giới thiệu</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/contact">Liên hệ</a>
@@ -66,7 +66,7 @@
         @yield('content')
     </main>
 
-    <footer class="footer">
+    <footer class=" footer">
         <div class="container">
             <div class="row">
                 <div class="col-lg-4 col-md-6 mb-4">

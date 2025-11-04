@@ -70,5 +70,5 @@ class CustomerController extends Controller
         } else {
             return view("customer.register");
         }
-    }
+    }// chưa có logout, chưa xong.
 }

@@ -37,12 +37,12 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav mx-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('home.index') }}">Trang chủ</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('home.products') }}">Sản phẩm</a>
+                        <a class="nav-link" href="{{ route('product.index') }}">Sản phẩm</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('home.about') }}">Giới thiệu</a>

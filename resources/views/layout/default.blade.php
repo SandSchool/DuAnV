@@ -7,26 +7,12 @@
     <title>@yield('title', 'ShoesVN - Shop Giày Chính Hãng')</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="{{ asset('resources/css/app.css') }}"><!-- ĐƯA ĐƯỜNG DẪN CHÍNH XÁC ĐẾN FILE CSS CỦA BẠN -->
+    <link rel="stylesheet" href="{{ asset('resources/css/app.css') }}">
 
     {{-- CÁC STYLE RIÊNG CỦA TỪNG TRANG SẼ ĐƯỢC ĐẨY VÀO ĐÂY --}}
 </head>
 
 <body>
-    <div class="top-bar">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <i class="fas fa-phone"></i> Hotline: 1900 1234
-                    <i class="fas fa-envelope ms-3"></i> contact@shoesvn.com
-                </div>
-                <div class="col-md-6 text-end">
-                    <a href="{{ route('customer.login') }}" class="text-white text-decoration-none me-3"><i class="fas fa-user"></i> Đăng nhập</a>
-                    <a href="{{ route('customer.register') }}" class="text-white text-decoration-none"><i class="fas fa-user-plus"></i> Đăng ký</a>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top">
         <div class="container">
@@ -37,7 +23,8 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
+                <!-- Menu chính - căn giữa -->
+                <ul class="navbar-nav mx-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('home.index') }}">Trang chủ</a>
                     </li>
@@ -50,13 +37,61 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/contact">Liên hệ</a>
                     </li>
+                </ul>
+
+                <!-- Icons giỏ hàng và account - căn phải -->
+                <ul class="navbar-nav">
                     <li class="nav-item">
                         <a class="nav-link cart-icon" href="/cart">
                             <i class="fas fa-shopping-cart"></i>
                             <span class="cart-badge">0</span>
                         </a>
                     </li>
+                    <li class="nav-item dropdown ms-2">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" title="Tài khoản">
+                            <i class="fas fa-user fa-lg"></i>
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-menu-end shadow border-0">
+                            @auth
+                            <li>
+                                <a class="dropdown-item" href="{{ route('customer.profile') }}">
+                                    <i class="fas fa-address-card fa-fw me-2 text-info"></i> Thông tin cá nhân
+                                </a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{{ route('customer.logout') }}"
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    <i class="fas fa-sign-out-alt fa-fw me-2 text-danger"></i> Đăng xuất
+                                </a>
+                            </li>
+                            @else
+                            <li>
+                                <a class="dropdown-item" href="{{ route('customer.login') }}">
+                                    <i class="fas fa-sign-in-alt fa-fw me-2 text-primary"></i> Đăng nhập
+                                </a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{{ route('customer.register') }}">
+                                    <i class="fas fa-user-plus fa-fw me-2 text-success"></i> Đăng ký
+                                </a>
+                            </li>
+                            @endauth
+                        </ul>
+                    </li>
                 </ul>
+
+                @auth
+                <form id="logout-form" action="{{ route('customer.logout') }}" method="POST" class="d-none">
+                    @csrf
+                </form>
+                @endauth
             </div>
         </div>
     </nav>
@@ -66,7 +101,7 @@
         @yield('content')
     </main>
 
-    <footer class=" footer">
+    <footer class="footer">
         <div class="container">
             <div class="row">
                 <div class="col-lg-4 col-md-6 mb-4">

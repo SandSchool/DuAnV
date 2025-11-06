@@ -10,17 +10,6 @@ body {
 }
 
 /* Header */
-.top-bar {
-    background-color: var(--primary-color);
-    color: white;
-    padding: 10px 0;
-    font-size: 14px;
-}
-
-.navbar {
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-}
-
 .navbar-brand {
     font-weight: bold;
     font-size: 24px;
@@ -37,6 +26,57 @@ body {
 .nav-link:hover {
     color: var(--secondary-color) !important;
 }
+
+/* Căn giữa menu và icon thẳng hàng */
+.navbar-nav {
+    align-items: center;
+}
+
+/* Icon giỏ hàng */
+.cart-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.cart-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: var(--secondary-color);
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* Dropdown account icon */
+.nav-item.dropdown {
+    display: flex;
+    align-items: center;
+}
+
+.dropdown-toggle::after {
+    display: none;
+}
+
+/* Dropdown menu styling */
+.dropdown-menu {
+    border-radius: 8px;
+    margin-top: 8px;
+}
+
+.dropdown-item {
+    padding: 10px 20px;
+    transition: all 0.3s;
+}
+
+.dropdown-item:hover {
+    background-color: #f8f9fa;
+    padding-left: 25px;
+}
+
 
 /* Search Bar */
 .search-container {

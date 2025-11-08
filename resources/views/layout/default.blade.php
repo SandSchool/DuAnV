@@ -8,6 +8,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('resources/css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('resources/css/register.css') }}">
+    <link rel="stylesheet" href="{{ asset('resources/css/login.css') }}">
+    <link rel="stylesheet" href="{{ asset('resources/css/register.css') }}">
 
     {{-- CÁC STYLE RIÊNG CỦA TỪNG TRANG SẼ ĐƯỢC ĐẨY VÀO ĐÂY --}}
 </head>
@@ -16,20 +19,19 @@
 
     <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top">
         <div class="container">
-            <a class="navbar-brand" href="">
+            <a class="navbar-brand" href="{{ route('home.index') }}">
                 <i class="fas fa-shoe-prints"></i> ShoesVN
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <!-- Menu chính - căn giữa -->
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('home.index') }}">Trang chủ</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('home.products') }}">Sản phẩm</a>
+                        <a class="nav-link" href="{{ route('product.index') }}">Sản phẩm</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('home.about') }}">Giới thiệu</a>
@@ -39,7 +41,6 @@
                     </li>
                 </ul>
 
-                <!-- Icons giỏ hàng và account - căn phải -->
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <a class="nav-link cart-icon" href="/cart">
@@ -48,25 +49,41 @@
                         </a>
                     </li>
                     <li class="nav-item dropdown ms-2">
-                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" title="Tài khoản">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false" title="Tài khoản">
                             <i class="fas fa-user fa-lg"></i>
+                            @auth('cus')
+                            <span class="ms-2 d-none d-lg-inline">{{ Auth::guard('cus')->user()->HOTEN }}</span>
+                            @endauth
                         </a>
 
                         <ul class="dropdown-menu dropdown-menu-end shadow border-0">
-                            @auth
+                            @auth('cus')
+                            <li class="px-3 py-2 border-bottom">
+                                <small class="text-muted">Xin chào,</small><br>
+                                <strong>{{ Auth::guard('cus')->user()->HOTEN }}</strong>
+                            </li>
                             <li>
                                 <a class="dropdown-item" href="{{ route('customer.profile') }}">
-                                    <i class="fas fa-address-card fa-fw me-2 text-info"></i> Thông tin cá nhân
+                                    <i class="fas fa-user-circle fa-fw me-2 text-info"></i> Thông tin cá nhân
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="">
+                                    <i class="fas fa-shopping-bag fa-fw me-2 text-success"></i> Đơn hàng của tôi
                                 </a>
                             </li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
+
                             <li>
-                                <a class="dropdown-item" href="{{ route('customer.logout') }}"
-                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                    <i class="fas fa-sign-out-alt fa-fw me-2 text-danger"></i> Đăng xuất
-                                </a>
+                                <form action="{{ route('customer.logout') }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="dropdown-item text-danger border-0 bg-transparent w-100 text-start">
+                                        <i class="fas fa-sign-out-alt fa-fw me-2"></i> Đăng xuất
+                                    </button>
+                                </form>
                             </li>
                             @else
                             <li>
@@ -87,11 +104,6 @@
                     </li>
                 </ul>
 
-                @auth
-                <form id="logout-form" action="{{ route('customer.logout') }}" method="POST" class="d-none">
-                    @csrf
-                </form>
-                @endauth
             </div>
         </div>
     </nav>

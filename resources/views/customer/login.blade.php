@@ -1,61 +1,65 @@
-@extends('layout.default')
-@section('content') 
+@extends("layout.default")
+@section("content")
 
-<div class="container my-5" style="max-width: 500px;">
-    <div class="card shadow-sm">
-        <div class="card-header bg-white text-center py-3">
-            <h4 class="mb-0">{{ __('Đăng Nhập Tài Khoản') }}</h4>
-            <p class="text-muted mb-0">Chào mừng bạn!</p>
-        </div>
 
-        <div class="card-body p-4">
-            <form method="POST" action="{{ route('customer.login') }}">
-                @csrf
-
-                {{-- Email Address --}}
-                <div class="mb-3">
-                    <label for="email" class="form-label">{{ __('Địa chỉ E-Mail') }}</label>
-                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-                    @error('email')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
-                </div>
-
-                {{-- Password --}}
-                <div class="mb-4">
-                    <label for="password" class="form-label">{{ __('Mật khẩu') }}</label>
-                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-                    @error('password')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
-                </div>
-
-                {{-- Remember Me & Forgot Password --}}
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                        <label class="form-check-label" for="remember">
-                            {{ __('Ghi nhớ đăng nhập') }}
-                        </label>
+<div class="login-wrapper">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5">
+                <div class="login-card">
+                    <div class="login-header">
+                        {{ __('Customer Login') }}
                     </div>
-                    <a href="{{-- route('password.request') --}}" class="small text-decoration-none">{{ __('Quên mật khẩu?') }}</a>
-                </div>
+                    <div class="login-body">
+                        <form method="POST" action="{{ route('customer.login') }}">
+                            @csrf
 
-                {{-- Submit Button --}}
-                <div class="d-grid">
-                    <button type="submit" class="btn btn-primary btn-lg">
-                        {{ __('Đăng Nhập') }}
-                    </button>
-                </div>
-            </form>
-        </div>
+                            <div class="form-group">
+                                <label for="email" class="form-label">{{ __('Email Address') }}</label>
+                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
+                                    name="email" value="{{ old('email') }}" required autocomplete="email"
+                                    autofocus placeholder="example@email.com">
+                                @error('email')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
 
-        <div class="card-footer text-center py-3">
-            <small class="text-muted">Chưa có tài khoản? <a href="{{-- route('customer.register') --}}">Đăng ký ngay</a></small>
+                            <div class="form-group">
+                                <label for="password" class="form-label">{{ __('Password') }}</label>
+                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror"
+                                    name="password" required autocomplete="current-password"
+                                    placeholder="Enter your password">
+                                @error('password')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+
+                            <div class="remember-me">
+                                <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                                <label for="remember">
+                                    {{ __('Remember Me') }}
+                                </label>
+                            </div>
+
+                            <button type="submit" class="btn-login">
+                                {{ __('Login') }}
+                            </button>
+
+                            <div class="divider">
+                                <span>or</span>
+                            </div>
+
+                            <div class="register-link">
+                                Don't have an account? <a href="{{ route('customer.register') }}">Register here</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

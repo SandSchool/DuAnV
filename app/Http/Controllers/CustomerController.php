@@ -182,7 +182,7 @@ class CustomerController extends Controller
 
         return view('customer.profile', compact('customer'));
     }
-
+    //chưa hoàn thiện phần xem thông tin cá nhân
     /**
      * Cập nhật thông tin profile
      */
@@ -242,62 +242,5 @@ class CustomerController extends Controller
                 ->withInput()
                 ->with('error', 'Cập nhật thất bại. Vui lòng thử lại.');
         }
-    }
+    } /// chưa hoàn thiện phần cập nhật thông tin cá nhân
 }
-
-
-// ============================================
-// NHỮNG THAY ĐỔI QUAN TRỌNG TỪ CODE CŨ
-// ============================================
-
-/*
-✅ ĐÃ SỬA:
-
-1. BỎ STATIC METHODS:
-   ❌ public static function login()
-   ✅ public function handleLogin()
-   → Static methods không nên dùng trong Controller
-   → Không inject được dependencies, khó test
-
-2. TÁCH BIỆT GET VÀ POST:
-   ❌ if (request()->isMethod("post")) { ... } else { ... }
-   ✅ showLoginForm() riêng, handleLogin() riêng
-   → Code rõ ràng hơn, dễ maintain
-
-3. THÊM VALIDATION MESSAGES:
-   ✅ Tất cả validate đều có message tiếng Việt
-   → User experience tốt hơn
-
-4. SỬA LỖI LOGIC ĐĂNG KÝ:
-   ❌ if ($add) return back()->with('error', ...)
-   → Sai logic! Nếu thêm THÀNH CÔNG lại báo lỗi
-   ✅ Dùng try-catch, kiểm tra đúng
-
-5. TẠO MÃ KHÁCH HÀNG AN TOÀN HƠN:
-   ❌ Customer::all()->count() + 1
-   → Nếu xóa record sẽ bị trùng mã
-   ✅ latest('MAKH')->first() và parse số
-   → An toàn hơn, không bị trùng
-
-6. THÊM SESSION SECURITY:
-   ✅ regenerate(), invalidate(), regenerateToken()
-   → Bảo mật tốt hơn
-
-7. THÊM ERROR HANDLING:
-   ✅ Dùng try-catch
-   ✅ Kiểm tra user tồn tại trước khi xử lý
-   → Tránh crash app
-
-8. THÊM CHỨC NĂNG PROFILE:
-   ✅ showProfile(), updateProfile()
-   → Đầy đủ CRUD cho customer
-
-9. SỬ DỤNG FACADES ĐÚNG CÁCH:
-   ✅ Auth::guard('cus') thay vì auth()->guard('cus')
-   ✅ Hash::make() thay vì bcrypt() (tương đương nhưng rõ ràng hơn)
-
-10. MAPPING FIELD NAMES:
-    ✅ 'EMAIL' => $request->email (DB dùng chữ HOA)
-    ✅ HOTEN, SODT, DCHI, MATKHAU, NGSINH
-    → Đúng với cấu trúc DB của bạn
-*/

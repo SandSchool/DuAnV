@@ -10,7 +10,8 @@
     <link rel="stylesheet" href="{{ asset('resources/css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('resources/css/register.css') }}">
     <link rel="stylesheet" href="{{ asset('resources/css/login.css') }}">
-    <link rel="stylesheet" href="{{ asset('resources/css/register.css') }}">
+    <link rel="stylesheet" href="{{ asset('resources/css/profile.css') }}">
+
 
     {{-- CÁC STYLE RIÊNG CỦA TỪNG TRANG SẼ ĐƯỢC ĐẨY VÀO ĐÂY --}}
 </head>

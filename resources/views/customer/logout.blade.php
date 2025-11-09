@@ -1,4 +1,4 @@
-@extends("layout.default")
+<!-- @extends("layout.default")
 @section("content")
 <style>
     .logout-wrapper {
@@ -211,4 +211,4 @@
         </div>
     </div>
 </div>
-@endsection
+@endsection -->

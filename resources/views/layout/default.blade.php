@@ -11,7 +11,8 @@
     <link rel="stylesheet" href="{{ asset('resources/css/register.css') }}">
     <link rel="stylesheet" href="{{ asset('resources/css/login.css') }}">
     <link rel="stylesheet" href="{{ asset('resources/css/profile.css') }}">
-
+    <link rel="stylesheet" href="{{ asset('resources/css/indexproduct.css') }}">
+    <link rel="stylesheet" href="{{ asset('resources/css/detail.css') }}">
 
     {{-- CÁC STYLE RIÊNG CỦA TỪNG TRANG SẼ ĐƯỢC ĐẨY VÀO ĐÂY --}}
 </head>
@@ -44,9 +45,11 @@
 
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link cart-icon" href="/cart">
+                        <!-- SỬA 1: Trỏ đến route 'cart.index' (như trong routes/web.php) -->
+                        <a class="nav-link cart-icon" href="{{ route('cart.show') }}" title="Giỏ hàng">
                             <i class="fas fa-shopping-cart"></i>
-                            <span class="cart-badge">0</span>
+                            <!-- SỬA 2: Hiển thị biến $cartCount từ AppServiceProvider -->
+                            <span class="cart-badge">{{ $cartCount ?? 0 }}</span>
                         </a>
                     </li>
                     <li class="nav-item dropdown ms-2">
@@ -70,7 +73,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="">
+                                <a class="dropdown-item" href="{{ route('cart.show') }}">
                                     <i class="fas fa-shopping-bag fa-fw me-2 text-success"></i> Đơn hàng của tôi
                                 </a>
                             </li>

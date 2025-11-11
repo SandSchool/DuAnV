@@ -4,6 +4,7 @@ use App\Http\Controllers\CustomerController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CartController;
 
 
 
@@ -66,3 +67,22 @@ Route::prefix('customer')->group(function () {
 // product routes
 Route::get('/product/index', [ProductController::class, 'index'])->name('product.index');
 Route::get('/product/detail/{product}', [ProductController::class, 'detail'])->name('product.detail');
+
+// cart routes
+Route::prefix('cart')->name('cart.')->group(function () {
+
+    // Trang hiển thị giỏ hàng
+    Route::get('/', [CartController::class, 'show'])->name('show');
+
+    // Thêm từ trang index (GET) - Tương thích với code của bạn
+    Route::get('/add/{id}', [CartController::class, 'add'])->name('add');
+
+    // Thêm từ trang chi tiết (POST)
+    Route::post('/add-detail/{id}', [CartController::class, 'addFromDetail'])->name('add.detail');
+
+    // Cập nhật giỏ hàng (dùng cho trang giỏ hàng)
+    Route::post('/update', [CartController::class, 'update'])->name('update');
+
+    // Xóa khỏi giỏ hàng (dùng cho trang giỏ hàng)
+    Route::get('/remove/{id}', [CartController::class, 'remove'])->name('remove');
+});

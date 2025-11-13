@@ -68,7 +68,7 @@
             <div class="col-md-4 mb-4">
                 <div class="team-card text-center">
                     <img src="https://via.placeholder.com/300x300/3498db/ffffff?text=CEO" class="rounded-circle mb-3" alt="CEO" width="200" height="200">
-                    <h4>Nguyễn Văn A</h4>
+                    <h4>Nguyễn Hoàng Nam</h4>
                     <p class="text-primary">CEO & Founder</p>
                     <p>Với 15 năm kinh nghiệm trong ngành thời trang và bán lẻ</p>
                 </div>
@@ -76,7 +76,7 @@
             <div class="col-md-4 mb-4">
                 <div class="team-card text-center">
                     <img src="https://via.placeholder.com/300x300/e74c3c/ffffff?text=Manager" class="rounded-circle mb-3" alt="Manager" width="200" height="200">
-                    <h4>Trần Thị B</h4>
+                    <h4>Trần Cát Trường</h4>
                     <p class="text-primary">Quản Lý Kinh Doanh</p>
                     <p>Chuyên gia về phát triển sản phẩm và chiến lược thị trường</p>
                 </div>
@@ -84,7 +84,7 @@
             <div class="col-md-4 mb-4">
                 <div class="team-card text-center">
                     <img src="https://via.placeholder.com/300x300/2ecc71/ffffff?text=Designer" class="rounded-circle mb-3" alt="Designer" width="200" height="200">
-                    <h4>Lê Văn C</h4>
+                    <h4>Nguyễn Trung Hiếu</h4>
                     <p class="text-primary">Trưởng Phòng Thiết Kế</p>
                     <p>Nhà thiết kế giày với nhiều giải thưởng quốc tế</p>
                 </div>

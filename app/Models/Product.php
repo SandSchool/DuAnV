@@ -21,4 +21,6 @@ class Product extends Model
     {
         return $query->where("XOA", "=", 0);
     }
+    
+
 }

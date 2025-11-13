@@ -90,7 +90,8 @@
             <div class="col-lg-3 col-md-4 col-sm-6">
                 <div class="card product-card">
                     <span class="product-badge">NEW</span>
-                    <img src="https://via.placeholder.com/300x250/3498db/ffffff?text=Nike+Air+Max" class="product-img" alt="Nike Air Max">
+                    <img src="public\images\nike-airmax270.jpg" class="product-img" alt="Nike Air Max 270">
+
                     <div class="card-body">
                         <h5 class="product-title">Nike Air Max 270</h5>
                         <p class="text-muted mb-2">
@@ -115,7 +116,7 @@
             <div class="col-lg-3 col-md-4 col-sm-6">
                 <div class="card product-card">
                     <span class="product-badge">-30%</span>
-                    <img src="https://via.placeholder.com/300x250/e74c3c/ffffff?text=Adidas+Ultraboost" class="product-img" alt="Adidas Ultraboost">
+                    <img src="public\images\adidas-ultra-boost-22-core-black-flash-orange.jpg" class="product-img" alt="Adidas Ultraboost">
                     <div class="card-body">
                         <h5 class="product-title">Adidas Ultraboost 22</h5>
                         <p class="text-muted mb-2">
@@ -140,7 +141,7 @@
             <div class="col-lg-3 col-md-4 col-sm-6">
                 <div class="card product-card">
                     <span class="product-badge">HOT</span>
-                    <img src="https://via.placeholder.com/300x250/2ecc71/ffffff?text=Puma+RS-X" class="product-img" alt="Puma RS-X">
+                    <img src="public\images\Puma-RS-X³-Super-Red-White-Men-372884-01-2.jpg" class="product-img" alt="Puma RS-X">
                     <div class="card-body">
                         <h5 class="product-title">Puma RS-X³ Puzzle</h5>
                         <p class="text-muted mb-2">
@@ -165,7 +166,7 @@
             <div class="col-lg-3 col-md-4 col-sm-6">
                 <div class="card product-card">
                     <span class="product-badge">SALE</span>
-                    <img src="https://via.placeholder.com/300x250/9b59b6/ffffff?text=Converse+Chuck" class="product-img" alt="Converse">
+                    <img src="public\images\0882-CON162050C000007-1.jpg" class="product-img" alt="Converse">
                     <div class="card-body">
                         <h5 class="product-title">Converse Chuck 70</h5>
                         <p class="text-muted mb-2">
@@ -189,7 +190,8 @@
 
             <div class="col-lg-3 col-md-4 col-sm-6">
                 <div class="card product-card">
-                    <img src="https://via.placeholder.com/300x250/f39c12/ffffff?text=Vans+Old+Skool" class="product-img" alt="Vans">
+                    <span class="product-badge">NEW</span>
+                    <img src="public\images\vans-old-skool-black-white-vn000d3hy28-2.jpg" class="product-img" alt="Vans">
                     <div class="card-body">
                         <h5 class="product-title">Vans Old Skool</h5>
                         <p class="text-muted mb-2">
@@ -214,7 +216,7 @@
             <div class="col-lg-3 col-md-4 col-sm-6">
                 <div class="card product-card">
                     <span class="product-badge">NEW</span>
-                    <img src="https://via.placeholder.com/300x250/16a085/ffffff?text=New+Balance" class="product-img" alt="New Balance">
+                    <img src="public\images\u574skb_nb_02_i.jpg" class="product-img" alt="New Balance">
                     <div class="card-body">
                         <h5 class="product-title">New Balance 574</h5>
                         <p class="text-muted mb-2">
@@ -239,7 +241,7 @@
             <div class="col-lg-3 col-md-4 col-sm-6">
                 <div class="card product-card">
                     <span class="product-badge">-25%</span>
-                    <img src="https://via.placeholder.com/300x250/34495e/ffffff?text=Reebok+Classic" class="product-img" alt="Reebok">
+                    <img src="public\images\reebok.jpg" class="product-img" alt="Reebok">
                     <div class="card-body">
                         <h5 class="product-title">Reebok Classic Leather</h5>
                         <p class="text-muted mb-2">
@@ -264,7 +266,7 @@
             <div class="col-lg-3 col-md-4 col-sm-6">
                 <div class="card product-card">
                     <span class="product-badge">HOT</span>
-                    <img src="https://via.placeholder.com/300x250/e67e22/ffffff?text=Jordan+Retro" class="product-img" alt="Jordan">
+                    <img src="public\images\airjordan.jpg" class="product-img" alt="Jordan">
                     <div class="card-body">
                         <h5 class="product-title">Air Jordan 1 Retro</h5>
                         <p class="text-muted mb-2">

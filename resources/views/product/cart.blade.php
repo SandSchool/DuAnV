@@ -244,7 +244,7 @@
                 <!-- Biến $total từ CartController -->
                 <strong>{{ number_format($total, 0, ',', '.') }}đ</strong>
             </div>
-            <a href="#" class="checkout-btn">Tiến hành thanh toán</a>
+            <a href="{{ route("payment.index") }}" class="checkout-btn">Tiến hành thanh toán</a>
         </div>
 
         @else

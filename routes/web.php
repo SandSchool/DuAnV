@@ -89,6 +89,9 @@ Route::prefix('cart')->name('cart.')->group(function () {
     // Xóa khỏi giỏ hàng (dùng cho trang giỏ hàng)
     Route::get('/remove/{id}', [CartController::class, 'remove'])->name('remove');
 });
+// payment page
+Route::get("payment", [CartController::class, "pay"])->name("payment.index");
+Route::post("payment", [CartController::class, "pay"]);
 
 
 // admin page

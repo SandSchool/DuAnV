@@ -67,9 +67,22 @@ Route::prefix('customer')->group(function () {
 // product routes
 Route::get('/product/index', [ProductController::class, 'index'])->name('product.index');
 Route::get('/product/detail/{product}', [ProductController::class, 'detail'])->name('product.detail');
+Route::get('/product', [ProductController::class, 'index'])->name('product.index');
+Route::get('/products/search', [ProductController::class, 'search'])->name('products.search');
+
+
+
 
 // cart routes
 Route::prefix('cart')->name('cart.')->group(function () {
+Route::post('/add-from-detail/{id}', [CartController::class, 'addFromDetail'])
+        ->name('addFromDetail');
+
+
+
+
+
+
 
     // Trang hiển thị giỏ hàng
     Route::get('/', [CartController::class, 'show'])->name('show');

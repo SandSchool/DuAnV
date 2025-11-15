@@ -33,13 +33,13 @@
                         </div>
                         <div class="thumbnail-images">
                             <div class="thumbnail active" onclick="changeImage('{{ $product_data->HINHANH }}', this)">
-                                <img src="{{ $product_data->HINHANH }}" alt="Thumbnail 1">
+                                
                             </div>
                             <div class="thumbnail" onclick="changeImage('{{ $product_data->HINHANH }}', this)">
-                                <img src="{{ $product_data->HINHANH }}" alt="Thumbnail 2">
+                                
                             </div>
                             <div class="thumbnail" onclick="changeImage('{{ $product_data->HINHANH }}', this)">
-                                <img src="{{ $product_data->HINHANH }}" alt="Thumbnail 3">
+                                
                             </div>
                         </div>
                     </div>
@@ -97,32 +97,37 @@
                                 <button class="option-btn" onclick="selectOption(this)">Xanh</button>
                                 <button class="option-btn" onclick="selectOption(this)">Đỏ</button>
                             </div>
-                        </div>
+                           </div>
 
-                        <!-- Quantity -->
-                        <div class="quantity-selector">
-                            <span class="quantity-label">Số lượng:</span>
-                            <div class="quantity-input">
-                                <button class="quantity-btn" onclick="decreaseQuantity()">
-                                    <i class="fas fa-minus"></i>
-                                </button>
-                                <input type="number" id="quantity" class="quantity-value" value="1" min="1" readonly>
-                                <button class="quantity-btn" onclick="increaseQuantity()">
-                                    <i class="fas fa-plus"></i>
-                                </button>
-                            </div>
-                        </div>
+                        <form action="{{ route('cart.addFromDetail', $product_data->MASP) }}" method="POST">
+    @csrf
 
-                        <!-- Action Buttons -->
-                        <div class="action-buttons">
-                            <a href="{{ url('cart/add') }}/{{ $product_data->MASP }}" class="btn-add-cart">
-                                <i class="fas fa-shopping-cart"></i>
-                                Thêm vào giỏ hàng
-                            </a>
-                            <button class="btn-wishlist" title="Thêm vào yêu thích">
-                                <i class="fas fa-heart"></i>
-                            </button>
-                        </div>
+    <!-- Quantity -->
+    <div class="quantity-selector">
+        <span class="quantity-label">Số lượng:</span>
+        <div class="quantity-input">
+            <button type="button" class="quantity-btn" onclick="decreaseQuantity()">
+                <i class="fas fa-minus"></i>
+            </button>
+            <input type="number" id="quantity" name="quantity" class="quantity-value" value="1" min="1" readonly>
+            <button type="button" class="quantity-btn" onclick="increaseQuantity()">
+                <i class="fas fa-plus"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+        <button type="submit" class="btn-add-cart">
+            <i class="fas fa-shopping-cart"></i>
+            Thêm vào giỏ hàng
+        </button>
+        <button class="btn-wishlist" title="Thêm vào yêu thích">
+            <i class="fas fa-heart"></i>
+        </button>
+    </div>
+</form>
+
 
                         <!-- Accordion Info -->
                         <div class="accordion" id="productAccordion">
@@ -186,26 +191,32 @@
             <p style="color: #666;">Các sản phẩm tương tự bạn có thể quan tâm</p>
         </div>
         <div class="row">
-            @for($i = 0; $i < 4; $i++)
-                <div class="col-lg-3 col-md-6 mb-4">
-                <div class="product-card" style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.08);">
-                    <div style="padding-top: 100%; position: relative; overflow: hidden;">
-                        <img src="{{ $product_data->HINHANH }}" alt="Product"
-                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
-                    </div>
-                    <div style="padding: 20px;">
-                        <h6 style="font-weight: 600; margin-bottom: 10px;">Giày thể thao {{ $i + 1 }}</h6>
-                        <div style="font-size: 18px; font-weight: 700; color: #667eea; margin-bottom: 15px;">
-                            {{ number_format($product_data->GIA, 0, ',', '.') }}đ
-                        </div>
-                        <a href="#" class="btn btn-sm w-100"
-                            style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 8px; padding: 10px;">
-                            Xem chi tiết
-                        </a>
-                    </div>
-                </div>
+            @foreach($related_products as $item)
+<div class="col-lg-3 col-md-6 mb-4">
+    <div class="product-card" style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.08);">
+        
+        <div style="padding-top: 100%; position: relative; overflow: hidden;">
+            <img src="{{ $item->HINHANH }}" alt="{{ $item->TENSP }}"
+                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
         </div>
-        @endfor
+
+        <div style="padding: 20px;">
+            <h6 style="font-weight: 600; margin-bottom: 10px;">{{ $item->TENSP }}</h6>
+
+            <div style="font-size: 18px; font-weight: 700; color: #667eea; margin-bottom: 15px;">
+                {{ number_format($item->GIA, 0, ',', '.') }}đ
+            </div>
+
+           <a href="{{ route('product.detail', ['product' => $item->MASP]) }}"class="btn btn-sm w-100"
+                style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 8px; padding: 10px;">
+                Xem chi tiết
+            </a>
+        </div>
+
+    </div>
+</div>
+@endforeach
+
     </div>
     </div>
 </section>

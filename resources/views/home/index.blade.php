@@ -9,8 +9,8 @@
         <p class="lead">Chính hãng - Chất lượng cao - Giá tốt nhất</p>
 
         <div class="search-container mx-auto mt-4">
-            <form action="/products/search" method="GET" class="d-flex">
-                <input type="text" name="keyword" class="form-control search-input" placeholder="Tìm kiếm sản phẩm...">
+            <form action="{{ route('product.index') }}" method="GET" class="d-flex">
+                <input type="text" name="search" class="form-control search-input" placeholder="Tìm kiếm sản phẩm..." value="{{ request('keyword') }}">
                 <button class="btn btn-danger search-btn" type="submit">
                     <i class="fas fa-search"></i> Tìm kiếm
                 </button>

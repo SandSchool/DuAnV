@@ -27,13 +27,19 @@
                             </a>
                         </li>
                         @foreach($category_data as $category)
-                        <li>
-                            <a href="{{ url('product') }}?category={{ $category->MALOAI }}"
-                                class="{{ request('category') == $category->MALOAI ? 'active' : '' }}">
-                                <i class="fas fa-chevron-right me-2"></i>{{ $category->TENLOAI }}
-                            </a>
-                        </li>
-                        @endforeach
+
+                      @if($category->MALOAI == 'FST00001' || $category->MALOAI == 'FST00002')
+                     @continue
+                     @endif
+
+                     <li>
+                  <a href="{{ url('product') }}?category={{ $category->MALOAI }}"
+                 class="{{ request('category') == $category->MALOAI ? 'active' : '' }}">
+                <i class="fas fa-chevron-right me-2"></i>{{ $category->TENLOAI }}
+               </a>
+             </li>
+
+              @endforeach
                     </ul>
 
                     <!-- Search Box -->

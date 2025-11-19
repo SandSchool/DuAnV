@@ -366,27 +366,28 @@
                 <strong id="cart-subtotal">{{ number_format($total, 0, ',', '.') }}đ</strong>
             </div>
 
-            <div class="summary-row">
+
+                <div class="summary-row">
                 <span>Phí vận chuyển:</span>
                 <strong id="shipping-fee-display">30.000đ</strong> <!-- Sẽ được JS cập nhật -->
-            </div>
-
-            <div class="summary-total">
-                <span>Tổng cộng:</span>
-                <strong id="cart-total">{{ number_format($total + 30000, 0, ',', '.') }}đ</strong> <!-- Sẽ được JS cập nhật -->
-            </div>
-
-            <a href="#" class="checkout-btn" style="margin-top: 25px;">Tiến hành thanh toán</a>
         </div>
 
-        @else
-        <!-- Khi giỏ hàng rỗng -->
-        <div class="empty-cart">
-            <i class="fas fa-shopping-cart"></i>
-            <h3>Giỏ hàng của bạn đang trống</h3>
-            <a href="{{ route('product.index') }}" class="btn-shop-now">Tiếp tục mua sắm</a>
+        <div class="summary-total">
+            <span>Tổng cộng:</span>
+            <strong id="cart-total">{{ number_format($total + 30000, 0, ',', '.') }}đ</strong> <!-- Sẽ được JS cập nhật -->
         </div>
-        @endif
+
+        <a href="{{ route("payment.index") }}" class="checkout-btn">Tiến hành thanh toán</a>
+    </div>
+
+    @else
+    <!-- Khi giỏ hàng rỗng -->
+    <div class="empty-cart">
+        <i class="fas fa-shopping-cart"></i>
+        <h3>Giỏ hàng của bạn đang trống</h3>
+        <a href="{{ route('product.index') }}" class="btn-shop-now">Tiếp tục mua sắm</a>
+    </div>
+    @endif
 
     </div>
 </section>

@@ -189,6 +189,11 @@ class CartController extends Controller
             // gui mail xac nhan don hang
             Mail::to($user->EMAIL)->send(new OrderMailable($order));
         }
+        // Kiểm tra xem khách hàng (guard 'cus') đã đăng nhập chưa
+        if (!auth()->guard('cus')->check()) {
+            // Nếu chưa, chuyển hướng về trang đăng nhập kèm thông báo
+            return redirect()->route('customer.login')->with('error', 'Vui lòng đăng nhập để xem đơn hàng!');
+        }
         // hien thi giao dien trang thanh toan
         return view("payment.index");
     }

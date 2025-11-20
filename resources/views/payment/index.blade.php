@@ -8,7 +8,8 @@
         Một email xác nhận đã được gửi tới {{ auth()->guard("cus")->user()->EMAIL }}. <br>
         Vui lòng kiểm tra email của bạn và hoàn tất xác nhận đơn hàng.
     </p>
-    <a href="#" class="btn btn-warning">Xem đơn đặt hàng</a>
+    <a href="{{ route('product.index') }}" class="btn btn-outline-primary mr-2">Tiếp tục mua sắm</a>
+    <a href="{{ route('order.history') }}" class="btn btn-warning">Xem đơn đặt hàng</a>
     <div class="py-5"></div>
 </div>
 @endsection

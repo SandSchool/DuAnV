@@ -3,99 +3,72 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Product; // Đảm bảo bạn đã import Product Model
-use App\Models\Order;;
-
-use App\Models\OrderDetail;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\OrderMailable;
+use App\Models\Product; // << Đảm bảo bạn đã import Model Product
+use Illuminate\Support\Facades\Session; // << Thêm Session facade
+use Illuminate\Validation\Rule;
 
 class CartController extends Controller
 {
     /**
-     * Hiển thị trang giỏ hàng.
+     * Hiển thị trang giỏ hàng (Hàm chuẩn)
+     */
+    public function index()
+    {
+        $cartItems = session('cart', []);
+        $total = 0;
+        foreach ($cartItems as $item) {
+            $total += $item['price'] * $item['quantity'];
+        }
+        // Trả về view 'cart.blade.php'
+        return view('cart.index', compact('cartItems', 'total'));
+    }
+
+    // ================================================================
+    /**
+     * SỬA LỖI "SHOW DOES NOT EXIST"
+     * Đây là hàm mới, được thêm vào để "chiều" theo bộ đệm (cache)
+     * Nó làm y hệt hàm index()
      */
     public function show()
     {
-        // Lấy giỏ hàng từ session
-        $cart = session()->get('cart', []);
-
-        // Tính tổng tiền
-        $total = 0;
-        foreach ($cart as $item) {
-            $total += $item['price'] * $item['quantity'];
-        }
-
-        // Trả về view của giỏ hàng (Bạn sẽ cần tạo file view này)
-        return view('product.cart', [
-            'cartItems' => $cart,
-            'total' => $total
-        ]);
+        // Chỉ cần gọi hàm index() ở trên
+        return $this->index();
     }
+    // ================================================================
+
 
     /**
-     * Thêm sản phẩm vào giỏ hàng (từ trang Index - GET request).
-     * Tương thích với: <a href="{{ url('cart/add') }}/{{ $product->MASP }}">
+     * Thêm một sản phẩm vào giỏ hàng (dùng cho AJAX)
      */
-    public function add($id)
+    public function add(Request $request)
     {
-        $product = Product::find($id); // Lấy MASP từ model của bạn
-
-        if (!$product) {
-            return redirect()->back()->with('error', 'Sản phẩm không tồn tại!');
-        }
-
-        // Lấy giỏ hàng hiện tại từ session
-        $cart = session()->get('cart', []);
-
-        // Kiểm tra xem sản phẩm đã có trong giỏ hàng chưa
-        if (isset($cart[$id])) {
-            // Nếu có, tăng số lượng lên 1
-            $cart[$id]['quantity']++;
-        } else {
-            // Nếu chưa, thêm mới với số lượng là 1
-            $cart[$id] = [
-                "name" => $product->TENSP,
-                "quantity" => 1,
-                "price" => $product->GIA,
-                "image" => $product->HINHANH
-            ];
-        }
-
-        // Lưu giỏ hàng mới vào session
-        session()->put('cart', $cart);
-
-        // Chuyển hướng về trang trước đó với thông báo thành công
-        return redirect()->back()->with('success', 'Đã thêm sản phẩm vào giỏ hàng!');
-    }
-
-    /**
-     * Thêm sản phẩm vào giỏ hàng (từ trang Detail - POST request).
-     * Tương thích với form trong file detail.txt của bạn.
-     */
-    public function addFromDetail(Request $request, $id)
-    {
-        $product = Product::find($id);
-
-        if (!$product) {
-            return redirect()->back()->with('error', 'Sản phẩm không tồn tại!');
-        }
-
-        // Validate số lượng
+        // 1. Validate request
         $request->validate([
+            // SỬA LỖI VALIDATE:
+            'product_id' => [
+                'required',
+                'exists:products,MASP' // << ĐÃ SỬA: Chỉ định rõ bảng và cột
+            ],
             'quantity' => 'required|integer|min:1'
         ]);
 
-        $quantity = (int)$request->input('quantity', 1);
+        $productId = $request->product_id;
+        $quantity = $request->quantity;
+
+        // SỬA: Đảm bảo Model Product của bạn dùng MASP làm Primary Key
+        // Nếu $product = Product::findOrFail($productId); bị lỗi
+        // thì hãy thay nó bằng:
+        $product = Product::where('MASP', $productId)->firstOrFail();
 
         $cart = session()->get('cart', []);
 
-        if (isset($cart[$id])) {
-            // Nếu có, cộng thêm số lượng
-            $cart[$id]['quantity'] += $quantity;
+        if (isset($cart[$productId])) {
+            // Nếu đã có, cộng dồn số lượng
+            $cart[$productId]['quantity'] += $quantity;
         } else {
-            // Nếu chưa, thêm mới
-            $cart[$id] = [
+            // Nếu chưa có, thêm mới với thông tin từ $product
+            // SỬA: Đảm bảo dùng đúng tên cột (TENSP, GIA, HINHANH)
+            $cart[$productId] = [
                 "name" => $product->TENSP,
                 "quantity" => $quantity,
                 "price" => $product->GIA,
@@ -105,37 +78,43 @@ class CartController extends Controller
 
         session()->put('cart', $cart);
 
-        // Chuyển hướng đến trang giỏ hàng
-        return redirect()->route('cart.show')->with('success', 'Đã thêm sản phẩm vào giỏ hàng!');
+        // 6. Tính tổng số lượng sản phẩm trong giỏ để trả về
+        $totalQuantity = 0;
+        foreach ($cart as $item) {
+            $totalQuantity += $item['quantity'];
+        }
+
+        // 7. Trả về response JSON
+        return response()->json([
+            'message' => 'Sản phẩm đã được thêm vào giỏ hàng!',
+            'total_quantity' => $totalQuantity
+        ]);
     }
 
     /**
-     * Cập nhật số lượng sản phẩm trong giỏ hàng (AJAX hoặc Form).
+     * Cập nhật số lượng (từ trang cart)
      */
     public function update(Request $request)
     {
-        if ($request->id && $request->quantity) {
-            $cart = session()->get('cart');
+        $request->validate([
+            'id' => 'required',
+            'quantity' => 'required|integer|min:1'
+        ]);
 
-            if (isset($cart[$request->id])) {
-                if ($request->quantity > 0) {
-                    $cart[$request->id]["quantity"] = $request->quantity;
-                    session()->put('cart', $cart);
-                    return redirect()->back()->with('success', 'Đã cập nhật giỏ hàng!');
-                } else {
-                    // Nếu số lượng <= 0, xóa luôn
-                    unset($cart[$request->id]);
-                    session()->put('cart', $cart);
-                    return redirect()->back()->with('success', 'Đã xóa sản phẩm khỏi giỏ hàng!');
-                }
-            }
+        $cart = session()->get('cart');
+
+        if (isset($cart[$request->id])) {
+            $cart[$request->id]['quantity'] = $request->quantity;
+            session()->put('cart', $cart);
         }
-        return redirect()->back()->with('error', 'Cập nhật thất bại!');
+
+        return redirect()->route('cart.index')->with('success', 'Giỏ hàng đã được cập nhật!');
     }
 
     /**
-     * Xóa một sản phẩm khỏi giỏ hàng.
+     * Xóa sản phẩm khỏi giỏ hàng (từ trang cart)
      */
+    // SỬA LỖI CÚ PHÁP: Đổi 'pre_remove' thành 'remove'
     public function remove($id)
     {
         $cart = session()->get('cart');
@@ -143,58 +122,8 @@ class CartController extends Controller
         if (isset($cart[$id])) {
             unset($cart[$id]);
             session()->put('cart', $cart);
-            return redirect()->back()->with('success', 'Đã xóa sản phẩm khỏi giỏ hàng!');
         }
 
-        return redirect()->back()->with('error', 'Xóa thất bại!');
-    }
-    public function pay()
-    {
-        // xu ly dat hang
-        if (request()->isMethod("post")) {
-            $cart = session("cart");
-            $user = auth()->guard("cus")->user();
-            $transport_method = request()->transport_method;
-
-            // them vao bang order
-            $total = 0;
-            foreach ($cart as $product) {
-                $total += $product["QTY"] * $product["GIA"];
-            }
-            $order = Order::create([
-                "MAKH" => $user->MAKH,
-                "MANV" => "FSE00001", // mac dinh la admin, admin co the phan quyen quan ly don hang cho nhan vien cu the
-                "TRIGIA" => $total,
-                "PTVC" => $transport_method
-            ]);
-            //            $order = DB::table("orders")->insert([
-            //            $order = DB::table("orders")->insertGetId([
-            //                "MAKH" => $user->MAKH,
-            //                "MANV" => "FSE00001", // mac dinh la admin, admin co the phan quyen quan ly don hang cho nhan vien cu the
-            //                "TRIGIA" => $total,
-            //                "PTVC" => $transport_method
-            //            ]);
-
-            // them vao bang order details
-            foreach ($cart as $product) {
-                $order_detail = new OrderDetail();
-                $order_detail->SOHD = $order->id;
-                $order_detail->MASP = $product["MASP"];
-                $order_detail->SL = $product["QTY"];
-                $order_detail->GIAGOC = $product["GIA"]; // gia khi nhap san pham
-                $order_detail->GIABAN = $product["GIA"]; // gia ban san pham hien tai
-                $order_detail->save();
-            }
-
-            // gui mail xac nhan don hang
-            Mail::to($user->EMAIL)->send(new OrderMailable($order));
-        }
-        // Kiểm tra xem khách hàng (guard 'cus') đã đăng nhập chưa
-        if (!auth()->guard('cus')->check()) {
-            // Nếu chưa, chuyển hướng về trang đăng nhập kèm thông báo
-            return redirect()->route('customer.login')->with('error', 'Vui lòng đăng nhập để xem đơn hàng!');
-        }
-        // hien thi giao dien trang thanh toan
-        return view("payment.index");
+        return redirect()->route('cart.index')->with('success', 'Sản phẩm đã được xóa khỏi giỏ hàng!');
     }
 }

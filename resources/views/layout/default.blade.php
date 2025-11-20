@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="{{ asset('resources/css/profile.css') }}">
     <link rel="stylesheet" href="{{ asset('resources/css/indexproduct.css') }}">
     <link rel="stylesheet" href="{{ asset('resources/css/detail.css') }}">
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     {{-- CÁC STYLE RIÊNG CỦA TỪNG TRANG SẼ ĐƯỢC ĐẨY VÀO ĐÂY --}}
 </head>
 
@@ -75,6 +75,11 @@
                             <li>
                                 <a class="dropdown-item" href="{{ route('cart.show') }}">
                                     <i class="fas fa-shopping-bag fa-fw me-2 text-success"></i> Đơn hàng của tôi
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{{ route('order.history') }}">
+                                    <i class="fas fa-history fa-fw me-2 text-success"></i> Lịch sử mua hàng
                                 </a>
                             </li>
                             <li>

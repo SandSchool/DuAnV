@@ -22,7 +22,7 @@
                     </h4>
                     <ul class="category-list">
                         <li>
-                            <a href="{{ url('product') }}" class="{{ !request('category') ? 'active' : '' }}">
+                            <a href="{{ route('cart.index') }}" class="{{ !request('category') ? 'active' : '' }}">
                                 <i class="fas fa-th me-2"></i>Tất cả sản phẩm
                             </a>
                         </li>
@@ -93,7 +93,7 @@
                             <div class="product-price">
                                 {{ number_format($product->GIA, 0, ',', '.') }}đ
                             </div>
-                            <a href="{{ url('cart/add') }}/{{ $product->MASP }}"
+                            <a href="{{ route('cart.add') }}/{{ $product->MASP }}"
                                 class="add-to-cart-btn">
                                 <i class="fas fa-shopping-cart me-2"></i>Thêm vào giỏ
                             </a>

@@ -8,6 +8,9 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\Admin\HomeController as AdminHomeController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
+use App\Http\Controllers\OrderController;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\PaymentController;
 
 
 
@@ -63,8 +66,15 @@ Route::prefix('customer')->group(function () {
             ->name('customer.profile.update');
 
         // Order history
-        Route::get('orders', [CustomerController::class, 'showOrders'])
-            ->name('customer.orders');
+        Route::prefix('order')->name('order.')->group(function () {
+
+            // Để đường dẫn là '/' (rỗng) thì URL sẽ dừng lại ở .../customer/order
+            // Đặt tên name là 'history' -> kết hợp với prefix thành: 'order.history'
+            Route::get('/', [OrderController::class, 'index'])->name('history');
+
+            // Các route con khác
+            Route::get('/detail/{order}', [OrderController::class, 'show'])->name('detail');
+        });
     });
 });
 // product routes
@@ -74,24 +84,28 @@ Route::get('/product/detail/{product}', [ProductController::class, 'detail'])->n
 // cart routes
 Route::prefix('cart')->name('cart.')->group(function () {
 
-    // Trang hiển thị giỏ hàng
-    Route::get('/', [CartController::class, 'show'])->name('show');
+    // Tương đương: Route::get('/cart/index', ...)->name('cart.index');
+    Route::get('/index', [CartController::class, 'index'])->name('index');
 
-    // Thêm từ trang index (GET) - Tương thích với code của bạn
-    Route::get('/add/{id}', [CartController::class, 'add'])->name('add');
+    // Tương đương: Route::get('/cart/show', ...)->name('cart.show');
+    Route::get('/show', [CartController::class, 'show'])->name('show');
 
-    // Thêm từ trang chi tiết (POST)
-    Route::post('/add-detail/{id}', [CartController::class, 'addFromDetail'])->name('add.detail');
+    // Tương đương: Route::post('/cart/add', ...)->name('cart.add');
+    Route::post('/add', [CartController::class, 'add'])->name('add');
 
-    // Cập nhật giỏ hàng (dùng cho trang giỏ hàng)
+    //
+
+    // Tương đương: Route::post('/cart/update', ...)->name('cart.update');
     Route::post('/update', [CartController::class, 'update'])->name('update');
 
-    // Xóa khỏi giỏ hàng (dùng cho trang giỏ hàng)
+    // Tương đương: Route::get('/cart/remove/{id}', ...)->name('cart.remove');
     Route::get('/remove/{id}', [CartController::class, 'remove'])->name('remove');
 });
+
 // payment page
-Route::get("payment", [CartController::class, "pay"])->name("payment.index");
-Route::post("payment", [CartController::class, "pay"]);
+Route::get("payment", [PaymentController::class, "pay"])->name("payment.index");
+Route::post("payment", [PaymentController::class, "pay"]);
+
 
 
 // admin page

@@ -83,7 +83,9 @@ class CartController extends Controller
         foreach ($cart as $item) {
             $totalQuantity += $item['quantity'];
         }
-
+        if ($request->has('redirect_back')) {
+            return redirect()->back()->with('success', 'Đã thêm sản phẩm vào giỏ hàng!');
+        }
         // 7. Trả về response JSON
         return response()->json([
             'message' => 'Sản phẩm đã được thêm vào giỏ hàng!',

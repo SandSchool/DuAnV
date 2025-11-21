@@ -6,7 +6,7 @@
 <div class="product-page-header">
     <div class="container">
         <h1><i class="fas fa-shoe-prints me-3"></i>Bộ Sưu Tập Giày</h1>
-        <p>Khám phá những mẫu giày thể thao và thời trang mới nhất 2024</p>
+        <p>Khám phá những mẫu giày thể thao và thời trang mới nhất 2025</p>
     </div>
 </div>
 
@@ -93,10 +93,18 @@
                             <div class="product-price">
                                 {{ number_format($product->GIA, 0, ',', '.') }}đ
                             </div>
-                            <a href="{{ route('cart.add') }}/{{ $product->MASP }}"
-                                class="add-to-cart-btn">
-                                <i class="fas fa-shopping-cart me-2"></i>Thêm vào giỏ
-                            </a>
+                            <form action="{{ route('cart.add') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="product_id" value="{{ $product->MASP }}">
+                                <input type="hidden" name="quantity" value="1">
+
+                                {{-- THÊM DÒNG NÀY: Để báo cho Controller biết cần quay lại trang cũ --}}
+                                <input type="hidden" name="redirect_back" value="1">
+
+                                <button type="submit" class="add-to-cart-btn">
+                                    <i class="fas fa-shopping-cart me-2"></i>Thêm vào giỏ
+                                </button>
+                            </form>
                         </div>
                     </div>
                     @empty

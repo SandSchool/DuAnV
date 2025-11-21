@@ -150,24 +150,11 @@ class CustomerController extends Controller
         }
     }
 
-    /**
-     * Xử lý đăng xuất
-     */
-    public function handleLogout(Request $request)
-    {
-        Auth::guard('cus')->logout();
-
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return redirect()->route('home.index')
-            ->with('success', 'Đăng xuất thành công. Hẹn gặp lại!');
-    }
 
     // ============================================
     // PROFILE METHODS
     // ============================================
-
+// xóa logout method vì đã có trong AuthController
     /**
      * Hiển thị trang profile
      */
@@ -188,6 +175,7 @@ class CustomerController extends Controller
      */
     public function updateProfile(Request $request)
     {
+        /** @var \App\Models\Customer $customer */ //cam kết với IDE rằng biến này là kiểu Customer từ app/Models/Customer.php
         $customer = Auth::guard('cus')->user();
 
         if (!$customer) {

@@ -67,6 +67,9 @@ Route::prefix('customer')->group(function () {
 // product routes
 Route::get('/product/index', [ProductController::class, 'index'])->name('product.index');
 Route::get('/product/detail/{product}', [ProductController::class, 'detail'])->name('product.detail');
+Route::post('/cart/add-from-detail/{id}', [CartController::class, 'addFromDetail'])->name('cart.addFromDetail');
+Route::get('/products/search', [ProductController::class, 'search'])->name('products.search');
+Route::get('/product', [ProductController::class, 'index'])->name('product.index');
 
 // cart routes
 Route::prefix('cart')->name('cart.')->group(function () {

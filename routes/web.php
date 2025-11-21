@@ -96,6 +96,7 @@ Route::middleware(['auth:cus'])->group(function () {
 // admin page
 Route::get("admin/login", [AdminHomeController::class, "login"])->name("admin.login");
 Route::post("admin/login", [AdminHomeController::class, "login"]);
+Route::post('/logout', [AdminHomeController::class, 'logout'])->name('logout');
 
 Route::group(["prefix" => "admin", "middleware" => "admin"], function () {
     Route::get("/", [AdminHomeController::class, "index"])->name("admin.home.index");

@@ -31,11 +31,17 @@ class ProductController extends Controller
         ]);
     }
 
-    public function detail()
+    public function detail($product)
     {
-        $product = request()->product; // lay ma san pham tren url
-        //        $product_data = Product::find($product)->where("XOA", "=", 0); // truy van du lieu tu ma san pham
-        $product_data = Product::isDeleted()->where("MASP", "=", $product)->first();
-        return view("product.detail", ["product_data" => $product_data]);
+        $product_data = \App\Models\Product::where('MASP', $product)->firstOrFail();
+
+        // Lấy các sản phẩm CÙNG LOẠI nhưng KHÁC MÃ sản phẩm hiện tại
+        $related_products = \App\Models\Product::where('TENSP', $product_data->TENSP)
+            ->where('MASP', '!=', $product_data->MASP) // <--- QUAN TRỌNG: Dòng này giúp loại bỏ sản phẩm đang xem
+            ->inRandomOrder()
+            ->limit(4)
+            ->get();
+
+        return view('product.detail', compact('product_data', 'related_products'));
     }
 }

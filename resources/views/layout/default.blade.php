@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="{{ asset('resources/css/profile.css') }}">
     <link rel="stylesheet" href="{{ asset('resources/css/indexproduct.css') }}">
     <link rel="stylesheet" href="{{ asset('resources/css/detail.css') }}">
+    <link rel="stylesheet" href="{{ asset('resources/css/orderhistory.css') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     {{-- CÁC STYLE RIÊNG CỦA TỪNG TRANG SẼ ĐƯỢC ĐẨY VÀO ĐÂY --}}
 </head>
@@ -37,9 +38,6 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('home.about') }}">Giới thiệu</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/contact">Liên hệ</a>
                     </li>
                 </ul>
 
@@ -158,8 +156,18 @@
                 </div>
             </div>
             <hr style="border-color: rgba(255,255,255,0.1);">
+
+            <!-- PHẦN COPYRIGHT Ở DƯỚI CÙNG -->
             <div class="text-center">
                 <p class="mb-0">&copy; 2024 ShoesVN. All rights reserved. Designed with <i class="fas fa-heart text-danger"></i></p>
+
+                {{-- =========================================================== --}}
+                {{-- LINK ẨN VÀO ADMIN (Secret Door) --}}
+                {{-- Chỉ hiển thị một dấu chấm (.) rất mờ --}}
+                {{-- =========================================================== --}}
+                <a href="{{ url('/admin') }}"
+                    title="Admin Panel"
+                    style="color: inherit; text-decoration: none; font-size: 10px; opacity: 0.05; display: inline-block; margin-top: 5px;">.</a>
             </div>
         </div>
     </footer>

@@ -54,14 +54,6 @@
                         Hiển thị {{ $product_data->firstItem() ?? 0 }} – {{ $product_data->lastItem() ?? 0 }}
                         của {{ $product_data->total() }} sản phẩm
                     </span>
-                    <div>
-                        <select class="sort-select">
-                            <option>Mới nhất</option>
-                            <option>Giá: Thấp đến cao</option>
-                            <option>Giá: Cao đến thấp</option>
-                            <option>Phổ biến nhất</option>
-                        </select>
-                    </div>
                 </div>
 
                 <!-- Product Grid -->

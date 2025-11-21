@@ -27,11 +27,7 @@
                             </a>
                         </li>
                         @foreach($category_data as $category)
-                        <li>
-                            <a href="{{ url('product') }}?category={{ $category->MALOAI }}"
-                                class="{{ request('category') == $category->MALOAI ? 'active' : '' }}">
-                                <i class="fas fa-chevron-right me-2"></i>{{ $category->TENLOAI }}
-                            </a>
+                        <li>   
                         </li>
                         @endforeach
                     </ul>
@@ -73,7 +69,8 @@
                     @forelse($product_data as $product)
                     <div class="product-card">
                         <div class="product-image">
-                            <img src="{{ $product->HINHANH }}" alt="{{ $product->TENSP }}">
+                            <img src="{{ asset($product->HINHANH) }}" alt="{{ $product->TENSP }}">
+
                             <span class="product-badge">New</span>
                             <div class="product-actions">
                                 <button class="action-btn" title="Yêu thích">

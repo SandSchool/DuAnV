@@ -36,6 +36,28 @@ class ProductController extends Controller
         $product = request()->product; // lay ma san pham tren url
         //        $product_data = Product::find($product)->where("XOA", "=", 0); // truy van du lieu tu ma san pham
         $product_data = Product::isDeleted()->where("MASP", "=", $product)->first();
-        return view("product.detail", ["product_data" => $product_data]);
+        // Lấy sản phẩm liên quan
+    $related_products = Product::isDeleted()
+    ->where("LOAI", $product_data->LOAI)
+    ->where("MASP", "!=", $product_data->MASP)
+    ->inRandomOrder()
+    ->take(4)
+    ->get();
+
+return view("product.detail", [
+    "product_data" => $product_data,
+    "related_products" => $related_products
+]);
+    }
+
+
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+
+        $products = Product::where('name', 'LIKE', "%{$query}%")->get();
+
+        return view('products.index', compact('products', 'query'));
     }
 }
+

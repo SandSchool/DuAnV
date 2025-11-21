@@ -128,4 +128,28 @@ class CartController extends Controller
 
         return redirect()->route('cart.index')->with('success', 'Sản phẩm đã được xóa khỏi giỏ hàng!');
     }
+    public function addFromDetail($id)
+{
+    // Lấy sản phẩm theo ID
+    $product = Product::findOrFail($id);
+
+    // Lấy giỏ hàng từ session
+    $cart = session()->get('cart', []);
+
+    if(isset($cart[$id])) {
+        $cart[$id]['quantity']++;
+    } else {
+        $cart[$id] = [
+            'name' => $product->TENSP,
+            'price' => $product->GIA,
+            'image' => $product->HINHSP,
+            'quantity' => 1
+        ];
+    }
+
+    session()->put('cart', $cart);
+
+    return redirect()->back()->with('success', 'Đã thêm sản phẩm vào giỏ!');
+}
+
 }

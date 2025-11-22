@@ -66,27 +66,35 @@
                             @endphp
 
                             <!-- Thêm class .cart-item để JS dễ tìm -->
-                            <li class="list-group-item d-flex justify-content-between lh-condensed cart-item">
+                            <li class="list-group-item d-flex justify-content-between lh-condensed cart-item align-items-center">
                                 <div style="width: 60%;">
                                     <h6 class="my-0">{{ $item['name'] ?? $item['TENSP'] }}</h6>
                                     <small class="text-muted">Đơn giá: {{ number_format($price) }}đ</small>
 
-                                    <!-- Input thay đổi số lượng -->
-                                    <div class="input-group input-group-sm mt-2" style="width: 120px;">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">SL</span>
-                                        </div>
+                                    <div class="input-group input-group-sm mt-2" style="width: 100px;">
+                                        <span class="input-group-text">SL</span>
                                         <input type="number"
                                             class="form-control item-qty"
                                             value="{{ $qty }}"
                                             min="1"
                                             data-price="{{ $price }}"
-                                            name="quantities[{{ $id }}]">
+                                            name="quantities[{{ $id }}]"
+                                            onchange="updateTotal()">
                                     </div>
                                 </div>
 
-                                <!-- Hiển thị thành tiền của từng món -->
-                                <span class="text-muted item-subtotal-display">{{ number_format($subtotal) }}đ</span>
+                                <div class="text-end">
+                                    <div class="mb-2">
+                                        <strong class="text-muted item-subtotal-display">{{ number_format($subtotal) }}đ</strong>
+                                    </div>
+
+                                    <a href="{{ route('cart.remove', ['id' => $id]) }}"
+                                        class="btn btn-outline-danger btn-sm"
+                                        onclick="return confirm('Bạn có chắc muốn xóa sản phẩm này khỏi giỏ hàng?')"
+                                        title="Xóa sản phẩm">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </a>
+                                </div>
                             </li>
                             @endforeach
 

@@ -159,12 +159,9 @@
 
             <!-- PHẦN COPYRIGHT Ở DƯỚI CÙNG -->
             <div class="text-center">
-                <p class="mb-0">&copy; 2024 ShoesVN. All rights reserved. Designed with <i class="fas fa-heart text-danger"></i></p>
+                <p class="mb-0">&copy; 2025 ShoesVN. All rights reserved. Designed with <i class="fas fa-heart text-danger"></i></p>
 
-                {{-- =========================================================== --}}
-                {{-- LINK ẨN VÀO ADMIN (Secret Door) --}}
-                {{-- Chỉ hiển thị một dấu chấm (.) rất mờ --}}
-                {{-- =========================================================== --}}
+                <!-- tạo dấu chấm mờ để chuyển sang trang admin -->
                 <a href="{{ url('/admin') }}"
                     title="Admin Panel"
                     style="color: inherit; text-decoration: none; font-size: 10px; opacity: 0.05; display: inline-block; margin-top: 5px;">.</a>

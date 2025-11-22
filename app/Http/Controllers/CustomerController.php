@@ -154,7 +154,21 @@ class CustomerController extends Controller
     // ============================================
     // PROFILE METHODS
     // ============================================
-// xóa logout method vì đã có trong AuthController
+    public function handleLogout(Request $request)
+    {
+        // 1. Đăng xuất khỏi guard 'cus'
+        Auth::guard('cus')->logout();
+
+        // 2. Hủy session hiện tại (bảo mật)
+        $request->session()->invalidate();
+
+        // 3. Tạo lại CSRF token mới (bảo mật)
+        $request->session()->regenerateToken();
+
+        // 4. Chuyển hướng về trang chủ
+        return redirect()->route('home.index')
+            ->with('success', 'Bạn đã đăng xuất thành công!');
+    }
     /**
      * Hiển thị trang profile
      */

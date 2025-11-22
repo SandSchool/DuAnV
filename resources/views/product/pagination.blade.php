@@ -75,31 +75,35 @@
     }
 </style>
 
-@if($paginator->hasPages())
+<!-- {{-- Kiểm tra nếu có dữ liệu thì mới hiển thị --}} -->
+@if ($paginator->total() > 0)
+
+<!-- {{-- Chỉ hiển thị thanh phân trang (Next/Prev) nếu có nhiều hơn 1 trang --}} -->
+@if ($paginator->hasPages())
 <div class="modern-pagination">
     {{-- Previous Button --}}
-    @if($paginator->onFirstPage())
-    <span class="pagination-nav disabled">
+    @if ($paginator->onFirstPage())
+    <span class="pagination-nav disabled" aria-disabled="true" aria-label="@lang('pagination.previous')">
         <i class="fas fa-chevron-left"></i>
     </span>
     @else
-    <a href="{{ $paginator->previousPageUrl() }}" class="pagination-nav" title="Trang trước">
+    <a href="{{ $paginator->previousPageUrl() }}" class="pagination-nav" rel="prev" aria-label="@lang('pagination.previous')">
         <i class="fas fa-chevron-left"></i>
     </a>
     @endif
 
-    {{-- Pagination Elements --}}
-    @foreach($elements as $element)
+    <!-- {{-- Pagination Elements --}} -->
+    @foreach ($elements as $element)
     {{-- "Three Dots" Separator --}}
-    @if(is_string($element))
-    <span class="pagination-dots">{{ $element }}</span>
+    @if (is_string($element))
+    <span class="pagination-dots disabled" aria-disabled="true">{{ $element }}</span>
     @endif
 
-    {{-- Array Of Links --}}
-    @if(is_array($element))
-    @foreach($element as $page => $url)
-    @if($page == $paginator->currentPage())
-    <span class="pagination-item active">{{ $page }}</span>
+    <!-- {{-- Array Of Links --}} -->
+    @if (is_array($element))
+    @foreach ($element as $page => $url)
+    @if ($page == $paginator->currentPage())
+    <span class="pagination-item active" aria-current="page">{{ $page }}</span>
     @else
     <a href="{{ $url }}" class="pagination-item">{{ $page }}</a>
     @endif
@@ -107,22 +111,22 @@
     @endif
     @endforeach
 
-    {{-- Next Button --}}
-    @if($paginator->hasMorePages())
-    <a href="{{ $paginator->nextPageUrl() }}" class="pagination-nav" title="Trang sau">
+    <!-- {{-- Next Button --}} -->
+    @if ($paginator->hasMorePages())
+    <a href="{{ $paginator->nextPageUrl() }}" class="pagination-nav" rel="next" aria-label="@lang('pagination.next')">
         <i class="fas fa-chevron-right"></i>
     </a>
     @else
-    <span class="pagination-nav disabled">
+    <span class="pagination-nav disabled" aria-disabled="true" aria-label="@lang('pagination.next')">
         <i class="fas fa-chevron-right"></i>
     </span>
     @endif
 </div>
-
-{{-- Page Info --}}
-<div class="text-center" style="color: #999; font-size: 14px; margin-top: 15px;">
-    <i class="fas fa-info-circle me-2"></i>
-    Trang {{ $paginator->currentPage() }} / {{ $paginator->lastPage() }}
-    (Tổng {{ $paginator->total() }} sản phẩm)
+@endif
+@else
+<!-- {{-- MESSAGE: Thông báo khi không tìm thấy dữ liệu --}} -->
+<div class="alert alert-warning text-center mt-3" role="alert">
+    <i class="fas fa-exclamation-triangle me-2"></i>
+    Không tìm thấy dữ liệu nào phù hợp.
 </div>
 @endif

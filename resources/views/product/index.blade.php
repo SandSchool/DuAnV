@@ -65,9 +65,6 @@
 
                             <span class="product-badge">New</span>
                             <div class="product-actions">
-                                <button class="action-btn" title="Yêu thích">
-                                    <i class="fas fa-heart"></i>
-                                </button>
                                 <a href="{{ route('product.detail', ['product' => $product->MASP]) }}"
                                     class="action-btn" title="Xem chi tiết">
                                     <i class="fas fa-eye"></i>

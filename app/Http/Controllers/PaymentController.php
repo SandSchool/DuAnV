@@ -76,7 +76,7 @@ class PaymentController extends Controller
                 "TRIGIA" => $total, // Giá này giờ đã bao gồm phí ship
                 "PTVC" => $transport_method,
                 "NGHD" => now(),
-                "token" => Str::random(20),
+              // xóa token  
             ];
 
             // Kiểm tra xem bảng orders có cột TRANGTHAI không

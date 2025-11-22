@@ -60,14 +60,10 @@
         <h2 class="section-title">Sản Phẩm Nổi Bật</h2>
         <div class="row">
 
-            {{--
-              - Lặp qua biến $products.
-            --}}
             @forelse($products ?? [] as $product)
             <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
                 <div class="card product-card">
 
-                    {{-- Bạn có thể làm cho badge này động, ví dụ:
                     @if($product->is_new)
                         <span class="product-badge">NEW</span>
                     @elseif($product->is_hot)
@@ -75,16 +71,15 @@
                     @elseif($product->sale_percent)
                          <span class="product-badge">-{{ $product->sale_percent }}%</span>
                     @endif
-                    --}}
                     <span class="product-badge">HOT</span>
 
-                    {{-- ĐÃ SỬA: Sử dụng tên cột 'HINHANH' (hoặc tên cột hình ảnh của bạn) --}}
+                    <!-- {{-- ĐÃ SỬA: Sử dụng tên cột 'HINHANH' (hoặc tên cột hình ảnh của bạn) --}} -->
                     <img src="{{ $product->HINHANH ?? 'https://placehold.co/300x250/EAEAEA/BDBDBD?text=No+Image' }}" class="product-img" alt="{{ $product->TENSP ?? 'Sản phẩm' }}">
                     <div class="card-body">
-                        {{-- ĐÃ SỬA: Sử dụng tên cột 'TENSP' --}}
+                        <!-- {{-- ĐÃ SỬA: Sử dụng tên cột 'TENSP' --}} -->
                         <h5 class="product-title">{{ $product->TENSP ?? 'Tên sản phẩm' }}</h5>
 
-                        {{-- Phần đánh giá này cũng nên được lấy động từ database --}}
+                        <!-- {{-- Phần đánh giá này cũng nên được lấy động từ database --}} -->
                         <p class="text-muted mb-2">
                             <i class="fas fa-star text-warning"></i>
                             <i class="fas fa-star text-warning"></i>
@@ -123,38 +118,20 @@
             @endforelse
 
         </div>
-
-        <div class="text-center mt-5">
-            {{-- Bạn nên thay thế phần phân trang tĩnh này bằng trình phân trang của Laravel --}}
-            {{-- Ví dụ: {{ $products->links() }} --}}
-            <nav>
-                <ul class="pagination justify-content-center">
-                    <li class="page-item disabled">
-                        <a class="page-link" href="#"><i class="fas fa-chevron-left"></i></a>
-                    </li>
-                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">4</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#"><i class="fas fa-chevron-right"></i></a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
+    <!-- bỏ phần chuyển trang vì không có nhiều sản phẩm -->
     </div>
 </section>
 @endsection
 
-{{-- ================================================= --}}
-{{-- PHẦN SCRIPT AJAX ĐƯỢC THÊM VÀO ĐÂY --}}
-{{-- ================================================= --}}
+<!-- Thêm đoạn script vào cuối trang để xử lý AJAX và hiệu ứng -->
 @push('scripts')
 <script>
     document.addEventListener('DOMContentLoaded', function() {
 
         // Lấy CSRF token từ thẻ meta
-        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        // cái này có tác dụng để bảo vệ khi gửi request POST
+        // token này phải khớp với token trên server
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content'); 
 
         // Tìm tất cả các nút "Thêm vào giỏ"
         document.querySelectorAll('.btn-add-cart').forEach(button => {
@@ -241,20 +218,17 @@
                 setTimeout(() => {
                     this.style.transform = '';
                 }, 200);
-
-                // Bạn có thể chuyển hướng người dùng đến trang danh mục
-                // Ví dụ: window.location.href = '/category/giay-the-thao';
             });
         });
 
         // Search form enhancement
         const searchForm = document.querySelector('.search-container form');
         const searchInput = document.querySelector('.search-input');
-
+        // tim kiem focus là khi được chọn
         searchInput.addEventListener('focus', function() {
             this.style.boxShadow = '0 0 10px rgba(52, 152, 219, 0.5)';
         });
-
+        // tim kiem blur là khi mất focus
         searchInput.addEventListener('blur', function() {
             this.style.boxShadow = '';
         });
